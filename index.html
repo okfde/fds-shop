@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FragDenStaat Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://pretix.eu/okfn/vds-shirts/widget/v1.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+        }
+    </style>
+</head>
+<body>
+    <pretix-widget event="https://pretix.eu/okfn/vds-shirts/"></pretix-widget>
+    <noscript>
+       <div class="pretix-widget">
+            <div class="pretix-widget-info-message">
+                JavaScript is disabled in your browser. To access our ticket shop without JavaScript,
+                please <a target="_blank" href="https://pretix.eu/okfn/vds-shirts/">click here</a>.
+            </div>
+        </div>
+    </noscript>
+    <script type="text/javascript" src="https://pretix.eu/widget/v1.de.js" async></script>
+    <script src="resizeobserver.global.js"></script>
+    <script>
+        (function(){
+            function resize () {
+                var height = document.getElementsByTagName('html')[0].offsetHeight
+                console.log(height)
+                window.parent.postMessage(['setIframeHeight', 'fds-shop-iframe', height], '*')
+            }
+
+            var widget = document.getElementsByTagName('pretix-widget')[0]
+
+            const ro = new ResizeObserver((entries, observer) => {
+                resize()
+            });
+            
+            ro.observe(document.body);
+          
+            document.addEventListener('DOMContentLoaded', resize)
+            document.addEventListener('resize', resize)
+
+        }())
+    </script>
+</body>
+</html>
