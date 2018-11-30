@@ -35,7 +35,7 @@
             function resize () {
                 var height = document.getElementsByTagName('html')[0].offsetHeight
                 console.log(height)
-                window.parent.postMessage(['setIframeHeight', 'fds-shop-iframe', height], '*')
+                window.parent.postMessage(['setIframeHeight', getQueryVariable("iframeid"), height], '*')
             }
 
             var ro = new ResizeObserver(function(entries, observer) {
