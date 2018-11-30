@@ -1,67 +1,73 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FragDenStaat Shop</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://pretix.eu/okfn/vds-shirts/widget/v1.css">
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-        }
-	#image {max-width:100%;cursor:pointer;}
-	.pretix-button {display:none;}
-    </style>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>FragDenStaat Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://pretix.eu/okfn/vds-shirts/widget/v1.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    }
+    #image {
+      max-width:100%;
+    }
+    .pretix-button {
+      display:none;
+    }
+  </style>
 </head>
 <body>
-	<img id="image" />
+  <a href="#" id="link">
+    <img id="image" src="" alt=""/>
+  </a>
 
-	<script src="resizeobserver.global.js"></script>
-
-    <script>
-        (function(){
-	function getQueryVariable(variable) {
-   	 var query = window.location.search.substring(1);
-    	var vars = query.split('&');
-    	for (var i = 0; i < vars.length; i++) {
-    	    var pair = vars[i].split('=');
-    	    if (decodeURIComponent(pair[0]) == variable) {
-            	return decodeURIComponent(pair[1]);
-    	    }
+<script src="resizeobserver.global.js"></script>
+<script>
+  (function(){
+    function getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split('&');
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+          return decodeURIComponent(pair[1]);
+         }
+      }
+      console.log('Query variable %s not found', variable);
     }
-    console.log('Query variable %s not found', variable);
-}
-            function resize () {
-                var height = document.getElementsByTagName('html')[0].offsetHeight
-                console.log(height)
-                window.parent.postMessage(['setIframeHeight', getQueryVariable("iframeid"), height], '*')
-            }
+    function resize () {
+      var height = document.getElementsByTagName('html')[0].offsetHeight
+      window.parent.postMessage(['setIframeHeight', getQueryVariable("iframeid"), height], '*')
+    }
 
-            var ro = new ResizeObserver(function(entries, observer) {
-                resize()
-            });
-            
-            ro.observe(document.body);
-          
-            document.addEventListener('DOMContentLoaded', resize)
-            document.addEventListener('resize', resize)
-	
-		var button = document.createElement("pretix-button")
-		button.setAttribute("event","https://pretix.eu/okfn/vds-shirts")
-		button.setAttribute("items", "item_" + getQueryVariable("itemid") + "=1")
-		document.body.insertBefore(button,document.body.firstChild)
-		var image = document.getElementById("image")
-		image.src=getQueryVariable("url")
-		image.alt = getQueryVariable("title")
-		image.addEventListener('click',function(){
-			document.querySelector(".pretix-button").click()
-			})
+    var ro = new ResizeObserver(function(entries, observer) {
+      resize()
+    });
+    ro.observe(document.body);
 
-        }())
-    </script>    
+    document.addEventListener('DOMContentLoaded', resize)
+    document.addEventListener('resize', resize)
 
-    	<script type="text/javascript" src="https://pretix.eu/widget/v1.de.js"></script>
+    var button = document.createElement("pretix-button")
+    button.setAttribute("event","https://pretix.eu/okfn/vds-shirts")
+    button.setAttribute("items", "item_" + getQueryVariable("itemid") + "=1")
+    document.body.insertBefore(button,document.body.firstChild)
+
+    var image = document.getElementById("image")
+    image.src=getQueryVariable("url")
+    image.alt = getQueryVariable("title")
+
+    var link = document.getElementById('link')
+    link.addEventListener('click',function(e){
+      e.preventDefault()
+      document.querySelector(".pretix-button").click()
+    })
+}())
+</script>
+
+<script type="text/javascript" src="https://pretix.eu/widget/v1.de.js"></script>
 
 </body>
 </html>
