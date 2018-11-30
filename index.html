@@ -32,9 +32,7 @@
                 window.parent.postMessage(['setIframeHeight', 'fds-shop-iframe', height], '*')
             }
 
-            var widget = document.getElementsByTagName('pretix-widget')[0]
-
-            const ro = new ResizeObserver((entries, observer) => {
+                        var ro = new ResizeObserver(function(entries, observer) {
                 resize()
             });
             
